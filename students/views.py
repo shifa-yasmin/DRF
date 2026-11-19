@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 # Create your views here.
 from rest_framework.views import APIView
 from students.models import Student
@@ -18,3 +17,9 @@ class StudentAPIView(APIView):
             serializer.save()
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    def delete(self,request):
+        student=Student.objects.get(id=request.data["id"])
+        student.delete()
+        return Response(
+            {"messaga":"student deleted succussfully"}
+        )
